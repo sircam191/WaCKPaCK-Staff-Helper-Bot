@@ -4,12 +4,10 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 
-
 public class NeedsBan extends ListenerAdapter {
 
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-      //  String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         String args[] = event.getMessage().getContentRaw().split(" ", 2);
 
@@ -34,6 +32,7 @@ public class NeedsBan extends ListenerAdapter {
 
         }
 
+        //Checks embed titles
         try {
             for (int i = 0; i < Main.bans.size(); i++) {
                 if (event.getMessage().getEmbeds().get(0).getTitle().toLowerCase().contains(Main.bans.get(i).toLowerCase() + " is connecting")){
