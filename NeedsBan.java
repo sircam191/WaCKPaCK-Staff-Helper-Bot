@@ -63,7 +63,6 @@ public class NeedsBan extends ListenerAdapter {
             }
 
         }  else if (args[0].equalsIgnoreCase(Main.prefix + "get")) {
-            event.getChannel().sendMessage("Current Ban List: " + Main.bans.toString()).queue();
             EmbedBuilder em = new EmbedBuilder();
             em.setTitle("Current Ban List:");
             em.setColor(Color.red);
@@ -90,11 +89,6 @@ public class NeedsBan extends ListenerAdapter {
 
         } catch (Exception e) {
             System.out.println("Error: checking embed with ban list");
-
         }
-
     }
-
-
-
 }
