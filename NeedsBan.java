@@ -36,8 +36,7 @@ public class NeedsBan extends ListenerAdapter {
                            return eventReason.getAuthor().equals(event.getAuthor()) && eventReason.getChannel().equals(event.getChannel()) && eventReason != event;
                        },
                        (eventReason) -> {
-                                reason.put(args[1], eventReason.getMessage().getContentRaw());
-                                System.out.println(eventReason.getMessage().getContentRaw());
+                                reason.put(args[1], eventReason.getMessage().getContentRaw() + "\n(ADDED BY: " + event.getAuthor().getName() +"#" + event.getAuthor().getDiscriminator() + ")");
                                 event.getChannel().sendMessage("Added the reason for the **" + args[1] + "** ban.").queue();
 
                        },
