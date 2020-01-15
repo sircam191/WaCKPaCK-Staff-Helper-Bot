@@ -36,8 +36,8 @@ public class NeedsBan extends ListenerAdapter {
                            return eventReason.getAuthor().equals(event.getAuthor()) && eventReason.getChannel().equals(event.getChannel()) && eventReason != event;
                        },
                        (eventReason) -> {
-                                reason.put(args[1], eventReason.getMessage().getContentRaw() + "\n(ADDED BY: " + event.getAuthor().getName() +"#" + event.getAuthor().getDiscriminator() + ")");
-                                event.getChannel().sendMessage("Added the reason for the **" + args[1] + "** ban.").queue();
+                                reason.put(args[1], eventReason.getMessage().getContentRaw() + "   (ADDED BY: " + event.getAuthor().getName() +"#" + event.getAuthor().getDiscriminator() + ")");
+                                event.getChannel().sendMessage("Success! Added the reason for the **" + args[1] + "** ban.").queue();
 
                        },
                        30, TimeUnit.SECONDS,
@@ -64,13 +64,15 @@ public class NeedsBan extends ListenerAdapter {
         }  else if (args[0].equalsIgnoreCase(Main.prefix + "get")) {
             EmbedBuilder em = new EmbedBuilder();
             em.setTitle("Current Ban List:");
-            em.setColor(Color.red);
+
 
             if(Main.bans.size() <= 0) {
+                em.setColor(Color.GREEN);
                 em.addField("", "No bans in ban list.", false);
             }
 
             for (int i = 0; i < Main.bans.size(); i++) {
+                em.setColor(Color.red);
                 em.addField("Steam: **" + Main.bans.get(i) + "**", "Reason: " + reason.get(Main.bans.get(i)), false);
             }
             event.getChannel().sendMessage(em.build()).queue();
@@ -78,16 +80,22 @@ public class NeedsBan extends ListenerAdapter {
         }
 
         //Checks embed titles
-        try {
+        //try {
             for (int i = 0; i < Main.bans.size(); i++) {
                 if (event.getMessage().getEmbeds().get(0).getTitle().toLowerCase().contains(Main.bans.get(i).toLowerCase() + " is connecting")){
                     event.getGuild().getTextChannelById("664046832783065113").sendMessage(event.getGuild().getRoleById("567217830274138112").getAsMention()+ "@here" + " **" + Main.bans.get(i) + "** is in the city!").queue();
-                    event.getGuild().getTextChannelById("664046832783065113").sendMessage("Reason for **" + Main.bans.get(i) + "** ban: \n ```" + reason.get(Main.bans.get(i) + "```")).queue();
+
+                    EmbedBuilder em = new EmbedBuilder();
+                    em.setTitle("**BAN USER CONNECTING**");
+                    em.setDescription(Main.bans.get(i) + " is connecting...");
+                    em.setColor(Color.red);
+                    em.addField("Steam: **" + Main.bans.get(i) + "**", "Reason: " + reason.get(Main.bans.get(i)), false);
+                    event.getGuild().getTextChannelById("664046832783065113").sendMessage(em.build()).queue();
                 }
             }
 
-        } catch (Exception e) {
+        //} catch (Exception e) {
             System.out.println("Error: checking embed with ban list");
-        }
+        //}
     }
 }
